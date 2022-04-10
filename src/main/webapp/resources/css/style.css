@@ -5,12 +5,14 @@ html {
     margin: 0px;
     font-family: Arial;
 }
+
 #left {
     width: 15%;
     background: #28272a;
     float: left;
     min-height: 100%;
 }
+
 #author {
     padding: 0px 0px 10px 10px;
     color: white;
@@ -19,24 +21,209 @@ html {
     width: max-content;
     bottom:0;
 }
+
 #center {
     background: #f1f1f1;
     width: 15%;
     min-height: 100%;
     float: left;
+    border-right: 1px solid #e0e0e0;
 }
+
 #right {
-    width: 70%;
-    min-height: 100%;
+    width: 68%;
+    min-height: 97%;
     float: left;
     background: #ffffff;
+    padding: 10px;
 }
+
 h1{
     padding-left: 10px;
     color: white;
 }
+
 h2{
     padding-left: 10px;
     padding-top: 10px;
     color: #1a1a1a;
+}
+
+.notebook-size{
+    padding: 15px;
+    color: white;
+    border-bottom: 2px solid #909090;
+}
+
+.note-size{
+    padding: 15px;
+    border-bottom: 1px solid #d0cfcf;
+}
+
+.note-link {
+    color: black;
+    padding-left: 15px;
+    display: block;
+    height: 50px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.note-item{
+    padding-top: 10px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #d0cfcf;
+    height: 70px;
+    cursor: pointer;
+}
+
+.note-item:hover {
+    background: #ffffff;
+}
+
+.note-modified{
+    margin: 0px 18px;
+    width: 133px;
+    font-size: 15px;
+}
+
+.notes-scroll {
+    overflow: auto;
+    height: 60vh;
+}
+
+.notebooks-scroll {
+    overflow: auto;
+    height: 60vh;
+}
+
+.notebook-item{
+    padding-bottom: 5px;
+    padding-top: 5px;
+    cursor: pointer;
+}
+
+.notebook-link{
+    color: white;
+    padding-left: 15px;
+    font-size: 20px;
+    text-decoration: none;
+    display: block;
+}
+
+.notebook-item:hover {
+    background: #5c5c5c;
+}
+
+.notebook-add-link{
+    margin-left: 14px;
+    padding: 4px;
+    text-decoration: none;
+    color: white;
+    background: #20a74c;
+    border-radius: 2px;
+}
+
+.notebook-rename-link{
+    margin-left: 11px;
+    padding: 4px;
+    text-decoration: none;
+    color: #fd9600;
+    border-radius: 2px;
+
+}
+
+.rename-p{
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.notebook-delete-link {
+    margin-left: 11px;
+    padding: 4px;
+    text-decoration: none;
+    color: rgb(255, 0, 0);
+    border: none;
+    background-color: transparent;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.notebook-delete-form{
+    margin-bottom: 5px;
+}
+
+.user-info{
+    padding: 0px 0px 0px 15px;
+    color: white;
+    font-size: 23px;
+}
+
+.logout-div{
+    padding: 15px 0px 20px 15px;
+}
+
+.logout-link{
+    color: silver;
+}
+
+.note-head {
+    border-bottom: 2px solid #909090;
+}
+
+.left-inline{
+    display: inline-block;
+}
+
+.inline{
+    display: inline-block;
+}
+
+.h2-content{
+    margin-top: 5px;
+}
+
+.note-content{
+    padding: 15px 0px 15px 15px;
+}
+
+.note-rename-link{
+    text-decoration: none;
+    color: #fd9600;
+    border-radius: 2px;
+    font-size: 17px;
+}
+
+.note-delete-link{
+    text-decoration: none;
+    color: rgb(255, 0, 0);
+    border: none;
+    background-color: transparent;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.note-save-link{
+    color: rgb(255 255 255);
+    border: none;
+    font-size: 17px;
+    cursor: pointer;
+    background: #16a300;
+    padding: 5px;
+    border-radius: 2px;
+    margin: 0px 15px 0px 35px;
+}
+
+.note-last-modified{
+    font-size: 17px;
+    margin-left: 15px;
+    color: #5c5c5c;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: #afafaf;
 }

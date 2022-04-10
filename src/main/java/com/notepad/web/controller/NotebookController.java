@@ -6,9 +6,7 @@ import com.notepad.web.service.NotebookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,9 +27,15 @@ public class NotebookController {
 
         List<Notebook> notebooks = notebookService.getAll();
         model.addAttribute("notebooks", notebooks);
-        model.addAttribute("currentNotebook", notebookService.get(notebookId != null ? notebookId : 1));
-        model.addAttribute("notes", noteService.getAllByNotebookId(notebookId != null ? notebookId : 1));
-        model.addAttribute("currentNote", noteService.get(noteId != null ? noteId : 1));
+        model.addAttribute("currentNotebook", notebookService.get(notebookId));
+        model.addAttribute("notes", noteService.getAllByNotebookId(notebookId));
+        model.addAttribute("currentNote", noteService.get(noteId));
         return "main";
+    }
+
+    @PostMapping(value = "/notebook/delete")
+    public String delete(@RequestParam Integer notebookId) {
+        notebookService.delete(notebookId);
+        return "redirect:/";
     }
 }

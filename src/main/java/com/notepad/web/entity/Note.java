@@ -1,5 +1,7 @@
 package com.notepad.web.entity;
 
+import java.time.ZonedDateTime;
+
 public class Note {
 
     private Integer id;
@@ -7,16 +9,18 @@ public class Note {
     private Integer userId;
     private String name;
     private String content;
+    private ZonedDateTime lastModified;
 
     public Note() {
     }
 
-    public Note(Integer id, Integer notebookId, Integer userId, String name, String content) {
+    public Note(Integer id, Integer notebookId, Integer userId, String name, String content, ZonedDateTime lastModified) {
         this.id = id;
         this.notebookId = notebookId;
         this.userId = userId;
         this.name = name;
         this.content = content;
+        this.lastModified = lastModified;
     }
 
     public Integer getId() {
@@ -57,5 +61,13 @@ public class Note {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public ZonedDateTime getLastModified() {
+        return lastModified;
+    }
+
+    public void setLastModified(ZonedDateTime lastModified) {
+        this.lastModified = lastModified;
     }
 }
