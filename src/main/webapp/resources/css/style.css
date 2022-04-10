@@ -160,7 +160,7 @@ h2{
 }
 
 .logout-div{
-    padding: 15px 0px 20px 15px;
+    padding: 5px 0px 30px 15px;
 }
 
 .logout-link{
@@ -203,7 +203,7 @@ h2{
     cursor: pointer;
 }
 
-.note-save-link{
+.note-save-button{
     color: rgb(255 255 255);
     border: none;
     font-size: 17px;
@@ -218,6 +218,42 @@ h2{
     font-size: 17px;
     margin-left: 15px;
     color: #5c5c5c;
+}
+
+.change-cover {
+    position: absolute;
+    width: 500px;
+    height: 200px;
+    background: #434343;
+    margin: 10% 0 0 35%;
+}
+
+.h2-change {
+    color: white;
+    margin-left: 10px;
+}
+
+.change-form-submit{
+    color: rgb(255 255 255);
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    background: #16a300;
+    padding: 5px;
+    border-radius: 2px;
+    margin: 0px 15px 0px 35px;
+}
+
+.change-form-input{
+    font-size: 25px;
+    margin-left: 20px;
+    background: #e8e8e8;
+    margin-bottom: 20px;
+}
+
+.cancel-button{
+    color: silver;
+    margin: 0 0 0 20px;
 }
 
 ::-webkit-scrollbar {

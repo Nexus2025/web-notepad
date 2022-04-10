@@ -33,6 +33,18 @@ public class NotebookController {
         return "main";
     }
 
+    @PostMapping(value = "notebook/create")
+    public String create(@RequestParam String notebookName) {
+        notebookService.create(notebookName);
+        return "redirect:/";
+    }
+
+    @PostMapping(value = "notebook/rename")
+    public String rename(@RequestParam Integer notebookId, @RequestParam String notebookNewName) {
+        notebookService.rename(notebookId, notebookNewName);
+        return "redirect:/";
+    }
+
     @PostMapping(value = "/notebook/delete")
     public String delete(@RequestParam Integer notebookId) {
         notebookService.delete(notebookId);

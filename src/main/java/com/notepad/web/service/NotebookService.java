@@ -1,42 +1,34 @@
 package com.notepad.web.service;
 
-import com.notepad.web.entity.Note;
 import com.notepad.web.entity.Notebook;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
 public class NotebookService {
 
-    private final List<Notebook> notebooks = new ArrayList<>();
+    private static final List<Notebook> notebooks = new ArrayList<>();
 
-    public NotebookService(){
+    static {
         notebooks.add(new Notebook(1, 1, "Java"));
         notebooks.add(new Notebook(2, 1, "Spring"));
         notebooks.add(new Notebook(3, 1, "Computer Science"));
+    }
 
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
-//        notebooks.add(new Notebook(3, 1, "NOTEBOOK"));
+    public Notebook create(String name) {
+        Integer id = notebooks.stream().max(Comparator.comparingInt(Notebook::getId)).get().getId();
+        Notebook notebook = new Notebook(++id, 1, name);
+        notebooks.add(notebook);
+        return notebook;
+    }
+
+    public Notebook rename(Integer id, String newName) {
+        Notebook notebook = notebooks.stream().filter(n -> n.getId().equals(id)).findFirst().get();
+        notebook.setName(newName);
+        return notebook;
     }
 
     public List<Notebook> getAll() {
