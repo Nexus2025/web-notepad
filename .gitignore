@@ -1,0 +1,6 @@
+.idea
+/resources
+/target
+*.iml
+/lib
+git
