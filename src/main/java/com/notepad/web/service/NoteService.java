@@ -26,23 +26,25 @@ public class NoteService {
         notes.add(new Note(8, 2, 1, "Spring Boot", "Spring Boot Content", ZonedDateTime.now()));
     }
 
-    public Note get(final Integer id) {
+    public Note get(Integer id, Integer userId) {
         return id != null ? notes.stream().filter(n -> n.getId().equals(id)).findFirst().get() : null;
     }
 
-    public List<Note> getAllByNotebookId(Integer id) {
+    public List<Note> getAllByNotebookId(Integer id, Integer userId) {
         return id != null ? notes.stream().filter(n -> n.getNotebookId().equals(id)).collect(Collectors.toList()) : null;
     }
 
-    public Note create(Integer notebookId, String name) {
-        Integer id = notes.stream().max(Comparator.comparingInt(Note::getId)).get().getId();
-        Note note = new Note(++id, notebookId, 1, name, "", getTime());
+    public Note create(Integer notebookId, String name, Integer userId) {
+        Note fromList = notes.stream().max(Comparator.comparingInt(Note::getId)).orElse(null);
+        Integer id = fromList != null ? fromList.getId() + 1 : 1;
+
+        Note note = new Note(id, notebookId, 1, name, "", getTime());
         notes.add(note);
 
         return note;
     }
 
-    public Note rename(Integer id, String newName) {
+    public Note rename(Integer id, String newName, Integer userId) {
         Note note = notes.stream().filter(n -> n.getId().equals(id)).findFirst().get();
         note.setName(newName);
         note.setLastModified(getTime());
@@ -50,13 +52,13 @@ public class NoteService {
         return note;
     }
 
-    public void update(Integer id, String content) {
+    public void update(Integer id, String content, Integer userId) {
         Note note = notes.stream().filter(n -> n.getId().equals(id)).findFirst().get();
         note.setContent(content);
         note.setLastModified(getTime());
     }
 
-    public void delete(Integer id) {
+    public void delete(Integer id, Integer userId) {
         notes.removeIf(n -> n.getId().equals(id));
     }
 

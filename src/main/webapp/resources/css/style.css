@@ -256,6 +256,86 @@ h2{
     margin: 0 0 0 20px;
 }
 
+.info-cover{
+    position: absolute;
+    width: 500px;
+    height: 120px;
+    background: #a8a8a8;;
+    margin: 2% 0 0 35%;
+}
+
+.info-cover-message {
+    color: white;
+    padding: 0px 15px;
+}
+
+#auth-cover {
+    width: 500px;
+    margin: 50px auto 0 auto;
+    text-align: center;
+    background: #535353;
+    padding: 20px;
+}
+
+.auth-header {
+    font-size: 36px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.auth-input[type="text"], input[type="password"] {
+    width: 300px;
+    height: 50px;
+    font-size: 18px;
+    margin-bottom: 25px;
+    border-radius: 3px;
+    padding-left: 10px;
+    border: 1px solid #d1d1e0;
+}
+
+.auth-submit {
+    padding: 13px 50px;
+    margin: 5px 0 20px 0;
+    font-size: 15px;
+    color: #fff;
+    background-color: #33c9e5;
+    border: none;
+    border-bottom: 4px solid #6ee9fd;
+    cursor: pointer;
+}
+
+.auth-submit:hover {
+    transition: all 0.5s;
+    background: #fff;
+    color: #2c536c;
+}
+
+.log-demo:hover {
+    transition: all 0.5s;
+    background: #fff;
+    color: #2c536c;
+}
+
+.log-demo {
+    padding: 13px 30px;
+    margin: 5px 0 20px 0;
+    font-size: 15px;
+    color: #fff;
+    background-color: #eeb35a;
+    border: none;
+    border-bottom: 4px solid #efe767;
+    cursor: pointer;
+}
+
+#reg {
+    color: #e3e3e3;
+}
+
+#reg:hover {
+    text-decoration: none;
+    color: white;
+}
+
 ::-webkit-scrollbar {
     width: 7px;
 }

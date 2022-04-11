@@ -5,7 +5,13 @@
     <title>Web Notepad</title>
     <link rel="stylesheet" href="/resources/css/style.css">
     <style>
-
+        #nb${currentNotebook.id}{
+            background: #5c5c5c;
+        }
+        #nt${currentNote.id}{
+            background: white;
+            border: 3px solid #0884a9;
+        }
     </style>
 </head>
 <body>
@@ -13,15 +19,15 @@
 
     <div id="left">
         <h1>Web Notepad</h1>
-        <div class="user-info">User:</div>
-        <div class="logout-div"><a class="logout-link" href="">Logout</a></div>
+        <div class="user-info">User: NONE</div>
+        <div class="logout-div"><a class="logout-link" href="/logout">Logout</a></div>
         <a class="notebook-add-link" href="/?action=notebookCreate">Add new notebook +</a>
         <br>
         <br>
         <div class="notebook-size">${notebooks.size()} notebooks:</div>
         <div class="notebooks-scroll">
             <c:forEach var="notebook" items="${notebooks}">
-                <div class="notebook-item">
+                <div id="nb${notebook.id}" class="notebook-item">
                     <a class="notebook-link" href="/?notebookId=${notebook.id}">${notebook.name}</a>
                 </div>
             </c:forEach>
@@ -41,7 +47,7 @@
             <div class="note-size">${notes.size()} notes:</div>
             <div class="notes-scroll">
                 <c:forEach var="note" items="${notes}">
-                    <div class="note-item">
+                    <div id="nt${note.id}" class="note-item">
                         <a class="note-link"
                            href="/?notebookId=${currentNotebook.id}&noteId=${note.id}">${note.name}</a>
                         <p class="note-modified">Last modified: ${note.lastModified.toLocalDate()}</p>
@@ -59,11 +65,12 @@
                     <input class="note-save-button" type="submit" form="content" value="Save note">
                 </div>
                 <div class="left-inline">
-                    <a class="note-rename-link" href="?action=noteRename&noteId=${currentNote.id}&noteName=${currentNote.name}">Rename note</a>
+                    <a class="note-rename-link" href="?action=noteRename&noteId=${currentNote.id}&noteName=${currentNote.name}&notebookId=${currentNotebook.id}">Rename note</a>
                 </div>
                 <div class="left-inline">
                     <form method="post" action="note/delete">
                         <input type="hidden" name="noteId" value="${currentNote.id}">
+                        <input type="hidden" name="notebookId" value="${currentNotebook.id}">
                         <input class="note-delete-link" type="submit" value="Delete note">
                     </form>
                 </div>
@@ -74,12 +81,14 @@
             <div class="note-content">
                 <form id="content" action="note/update" method="post">
                     <textarea style="width: 100%; height: 80%" name="content">${currentNote.content}</textarea>
+                    <input type="hidden" name="notebookId" value="${currentNotebook.id}">
                     <input type="hidden" name="noteId" value="${currentNote.id}">
                 </form>
             </div>
         </c:if>
     </div>
 
+    <%-- Create and rename forms --%>
     <c:if test="${param.get('action').equals('notebookCreate')}">
         <div class="change-cover">
             <h2 class="h2-change">CREATE NOTEBOOK</h2>
@@ -120,12 +129,39 @@
             <h2 class="h2-change">RENAME</h2>
             <form method="post" action="/note/rename">
                 <input type="hidden" name="noteId" value="${param.get("noteId")}">
+                <input type="hidden" name="notebookId" value="${currentNotebook.id}">
                 <input class="change-form-input" type="text" name="noteNewName" value="${param.get("noteName")}">
                 <input class="change-form-submit" type="submit" value="SAVE">
                 <a class="cancel-button" href="/">Cancel</a>
             </form>
         </div>
     </c:if>
+
+    <%-- Messages if notebooks or notes lists are empty or notebook or note isn't changed --%>
+    <c:if test="${currentNote == null}">
+        <div class="info-cover">
+            <h2 class="info-cover-message">Choose a note</h2>
+        </div>
+    </c:if>
+
+    <c:if test="${currentNotebook == null}">
+        <div class="info-cover">
+            <h2 class="info-cover-message">Choose a notebook</h2>
+        </div>
+    </c:if>
+
+    <c:if test="${notebooks.size() == 0}">
+        <div class="info-cover">
+            <h2 class="info-cover-message">You don't have notebooks.<br>Click on "Add new notebook +"<br>button to create</h2>
+        </div>
+    </c:if>
+
+    <c:if test="${notes.size() == 0}">
+        <div class="info-cover">
+            <h2 class="info-cover-message">You don't have notes in this notebook.<br>Click on "Add new note +"<br>button to create</h2>
+        </div>
+    </c:if>
+
 </div>
 </body>
 </html>

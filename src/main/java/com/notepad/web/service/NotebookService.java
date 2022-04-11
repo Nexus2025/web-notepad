@@ -18,28 +18,30 @@ public class NotebookService {
         notebooks.add(new Notebook(3, 1, "Computer Science"));
     }
 
-    public Notebook create(String name) {
-        Integer id = notebooks.stream().max(Comparator.comparingInt(Notebook::getId)).get().getId();
-        Notebook notebook = new Notebook(++id, 1, name);
+    public Notebook create(String name, Integer userId) {
+        Notebook fromList = notebooks.stream().max(Comparator.comparingInt(Notebook::getId)).orElse(null);
+        Integer id = fromList != null ? fromList.getId() + 1 : 1;
+
+        Notebook notebook = new Notebook(id, 1, name);
         notebooks.add(notebook);
         return notebook;
     }
 
-    public Notebook rename(Integer id, String newName) {
+    public Notebook rename(Integer id, String newName, Integer userId) {
         Notebook notebook = notebooks.stream().filter(n -> n.getId().equals(id)).findFirst().get();
         notebook.setName(newName);
         return notebook;
     }
 
-    public List<Notebook> getAll() {
+    public List<Notebook> getAll(Integer userId) {
         return notebooks;
     }
 
-    public Notebook get(Integer id) {
+    public Notebook get(Integer id, Integer userId) {
         return id != null ? notebooks.stream().filter(n -> n.getId().equals(id)).findFirst().get() : null;
     }
 
-    public void delete(Integer id) {
+    public void delete(Integer id, Integer userId) {
         notebooks.removeIf(notebook -> notebook.getId().equals(id));
     }
 }
