@@ -5,4 +5,4 @@
 /lib
 git
 *.txt
-src/main/resources/db/database.properties
+database.properties
