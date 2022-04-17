@@ -28,15 +28,15 @@
     </http>
 
     <authentication-manager alias="authenticationManager">
-        <authentication-provider user-service-ref="userService">
-            <password-encoder ref="encoder"/>
+        <authentication-provider user-service-ref="userDetailsService">
+            <password-encoder ref="passwordEncoder"/>
         </authentication-provider>
     </authentication-manager>
 
-    <beans:bean id="userService"
-                class="com.notepad.web.service.UserServiceImpl"/>
+    <beans:bean id="userDetailsService"
+                class="com.notepad.web.service.UserDetailsServiceImpl"/>
 
-    <beans:bean id="encoder"
+    <beans:bean id="passwordEncoder"
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
         <beans:constructor-arg name="strength" value="11"/>
     </beans:bean>

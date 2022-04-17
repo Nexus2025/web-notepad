@@ -1,7 +1,7 @@
 package com.notepad.web.validator;
 
 import com.notepad.web.entity.User;
-import com.notepad.web.service.UserServiceImpl;
+import com.notepad.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -11,7 +11,7 @@ import org.springframework.validation.ValidationUtils;
 public class UserValidator {
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     public void validateRegistration(User user, Errors errors) {
 

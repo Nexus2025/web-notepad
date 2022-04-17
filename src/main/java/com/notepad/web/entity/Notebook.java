@@ -1,12 +1,27 @@
 package com.notepad.web.entity;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "notebooks")
 public class Notebook {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "user_id")
     private Integer userId;
+
+    @Column(name = "name")
     private String name;
 
     public Notebook() {
+    }
+
+    public Notebook(Integer userId, String name) {
+        this.userId = userId;
+        this.name = name;
     }
 
     public Notebook(Integer id, Integer userId, String name) {

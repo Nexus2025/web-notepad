@@ -14,10 +14,10 @@
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.postgresql.Driver"/>
-        <property name="url" value="jdbc:postgresql://ec2-34-242-84-130.eu-west-1.compute.amazonaws.com:5432/d1fei7ieqn1g5q"/>
-        <property name="username" value="spepctquxbawxb"/>
-        <property name="password" value="4a1f2cef3ff827ada4448acec8fe740766357f6117928f0f35c65c8a461d7bbf"/>
+        <property name="driverClassName" value="${JDBC_DRIVER}"/>
+        <property name="url" value="${DB_URL}"/>
+        <property name="username" value="${DB_USERNAME}"/>
+        <property name="password" value="${DB_PASSWORD}"/>
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

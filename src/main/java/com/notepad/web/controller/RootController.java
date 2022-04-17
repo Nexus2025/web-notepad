@@ -4,10 +4,9 @@ import com.notepad.web.entity.Notebook;
 import com.notepad.web.service.NoteService;
 import com.notepad.web.service.NotebookService;
 import com.notepad.web.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +19,6 @@ import java.util.List;
 @RequestMapping("/")
 public class RootController {
 
-    private static final Logger log = LoggerFactory.getLogger(RootController.class);
-
     @Autowired
     private NotebookService notebookService;
 
@@ -32,6 +29,7 @@ public class RootController {
     private UserService userService;
 
     @GetMapping
+    @Transactional
     public String getAll(Model model, Principal principal,
                          @RequestParam(required = false)Integer notebookId,
                          @RequestParam(required = false)Integer noteId) {
@@ -40,9 +38,15 @@ public class RootController {
 
         List<Notebook> notebooks = notebookService.getAll(userId);
         model.addAttribute("notebooks", notebooks);
-        model.addAttribute("currentNotebook", notebookService.get(notebookId, userId));
-        model.addAttribute("notes", noteService.getAllByNotebookId(notebookId, userId));
-        model.addAttribute("currentNote", noteService.get(noteId, userId));
+
+        if (notebookId != null) {
+            model.addAttribute("currentNotebook", notebookService.get(notebookId, userId));
+            model.addAttribute("notes", noteService.getAllByNotebookId(notebookId, userId));
+        }
+
+        if (noteId != null) {
+            model.addAttribute("currentNote", noteService.get(noteId, userId));
+        }
         return "main";
     }
 }

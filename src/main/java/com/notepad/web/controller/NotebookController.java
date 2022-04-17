@@ -5,6 +5,7 @@ import com.notepad.web.service.NotebookService;
 import com.notepad.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -22,27 +23,30 @@ public class NotebookController {
     private UserService userService;
 
     @PostMapping(value = "/create")
+    @Transactional
     public RedirectView create(@RequestParam String notebookName, RedirectAttributes attributes, Principal principal) {
 
         Integer userId = userService.findByUserName(principal.getName()).getId();
-        Notebook newNotebook = notebookService.create(notebookName, userId);
-        attributes.addAttribute("notebookId", newNotebook.getId());
+        Notebook notebook = notebookService.create(new Notebook(userId, notebookName), userId);
+        attributes.addAttribute("notebookId", notebook.getId());
 
         return new RedirectView("/");
     }
 
     @PostMapping(value = "/rename")
+    @Transactional
     public RedirectView rename(@RequestParam Integer notebookId, @RequestParam String notebookNewName,
                                RedirectAttributes attributes, Principal principal) {
 
         Integer userId = userService.findByUserName(principal.getName()).getId();
-        notebookService.rename(notebookId, notebookNewName, userId);
-        attributes.addAttribute("notebookId", notebookId);
+        Notebook notebook = notebookService.rename(new Notebook(notebookId, userId, notebookNewName), userId);
+        attributes.addAttribute("notebookId", notebook.getId());
 
         return new RedirectView("/");
     }
 
     @PostMapping(value = "/delete")
+    @Transactional
     public String delete(@RequestParam Integer notebookId, Principal principal) {
         Integer userId = userService.findByUserName(principal.getName()).getId();
         notebookService.delete(notebookId, userId);

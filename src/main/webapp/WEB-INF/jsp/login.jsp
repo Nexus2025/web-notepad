@@ -38,7 +38,7 @@
             </form:form>
 
             <p><a class="log-demo" href="/auth/login/demo">LOG IN AS DEMO USER</a></p><br>
-            <p><a id="reg" href="/auth/register">Back to Registration</a></p>
+            <p><a id="reg" href="/auth/register">Registration</a></p>
         </div>
     </div>
 

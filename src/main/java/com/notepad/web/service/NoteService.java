@@ -1,68 +1,49 @@
 package com.notepad.web.service;
 
 import com.notepad.web.entity.Note;
-import com.notepad.web.entity.Notebook;
+import com.notepad.web.repository.NoteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class NoteService {
 
-    private static final List<Note> notes = new ArrayList<>();
-
-    static {
-        notes.add(new Note(1, 1, 1, "Collections", "Collections Content", ZonedDateTime.now()));
-        notes.add(new Note(2, 1, 1, "Multithreading", "Multithreading Content", ZonedDateTime.now()));
-        notes.add(new Note(3, 1, 1, "Stream API", "Stream API Content", ZonedDateTime.now()));
-        notes.add(new Note(4, 1, 1, "I/O", "I/O Content", ZonedDateTime.now()));
-        notes.add(new Note(5, 1, 1, "Exceptions", "Exceptions Content", ZonedDateTime.now()));
-        notes.add(new Note(6, 2, 1, "Spring MVC", "Spring MVC Content", ZonedDateTime.now()));
-        notes.add(new Note(7, 2, 1, "Spring AOP", "Spring AOP Content", ZonedDateTime.now()));
-        notes.add(new Note(8, 2, 1, "Spring Boot", "Spring Boot Content", ZonedDateTime.now()));
-    }
+    @Autowired
+    private NoteRepository noteRepository;
 
     public Note get(Integer id, Integer userId) {
-        return id != null ? notes.stream().filter(n -> n.getId().equals(id) && n.getUserId().equals(userId))
-                .findFirst().get() : null;
+        return noteRepository.getOne(id);
     }
 
     public List<Note> getAllByNotebookId(Integer id, Integer userId) {
-        return id != null ? notes.stream().filter(n -> n.getNotebookId().equals(id) && n.getUserId().equals(userId))
-                .collect(Collectors.toList()) : null;
+        return noteRepository.findAllByNotebookId(id);
     }
 
-    public Note create(Integer notebookId, String name, Integer userId) {
-        Note fromList = notes.stream().max(Comparator.comparingInt(Note::getId)).orElse(null);
-        Integer id = fromList != null ? fromList.getId() + 1 : 1;
-
-        Note note = new Note(id, notebookId, userId, name, "", getTime());
-        notes.add(note);
-
-        return note;
+    public Note create(Note note, Integer userId) {
+        note.setLastModified(getTime());
+        note.setContent("Default content");
+        return noteRepository.save(note);
     }
 
     public Note rename(Integer id, String newName, Integer userId) {
-        Note note = notes.stream().filter(n -> n.getId().equals(id) && n.getUserId().equals(userId))
-                .findFirst().get();
+        Note note = noteRepository.getOne(id);
         note.setName(newName);
         note.setLastModified(getTime());
-
-        return note;
+        return noteRepository.save(note);
     }
 
     public void update(Integer id, String content, Integer userId) {
-        Note note = notes.stream().filter(n -> n.getId().equals(id) && n.getUserId().equals(userId)).findFirst().get();
+        Note note = noteRepository.getOne(id);
         note.setContent(content);
         note.setLastModified(getTime());
+        noteRepository.save(note);
     }
 
     public void delete(Integer id, Integer userId) {
-        notes.removeIf(n -> n.getId().equals(id) && n.getUserId().equals(userId));
+        noteRepository.deleteById(id);
     }
 
     private ZonedDateTime getTime() {
