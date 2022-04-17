@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:sec="http://www.springframework.org/schema/security"
+             xsi:schemaLocation="
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-5.4.xsd
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+    <http auto-config="true">
+        <intercept-url pattern="/" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/auth/login" access="isAnonymous()"/>
+        <intercept-url pattern="/auth/register" access="isAnonymous()"/>
+
+<!--        <access-denied-handler error-page="/access-denied" />-->
+<!--        https://stackoverflow.com/questions/18584558/redirect-when-intercept-url-is-not-authorized-in-spring-mvc-->
+
+        <form-login login-page="/auth/login" default-target-url="/" authentication-failure-url="/login?error"
+                    username-parameter="username" password-parameter="password"/>
+
+        <logout
+                logout-success-url="/auth/login"
+                logout-url="/logout"
+                delete-cookies="JSESSIONID" />
+    </http>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userService">
+            <password-encoder ref="encoder"/>
+        </authentication-provider>
+    </authentication-manager>
+
+    <beans:bean id="userService"
+                class="com.notepad.web.service.UserServiceImpl"/>
+
+    <beans:bean id="encoder"
+                class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <beans:constructor-arg name="strength" value="11"/>
+    </beans:bean>
+</beans:beans>

@@ -156,11 +156,18 @@ h2{
 .user-info{
     padding: 0px 0px 0px 15px;
     color: white;
-    font-size: 23px;
+    font-size: 18px;
 }
 
-.logout-div{
-    padding: 5px 0px 30px 15px;
+.logout-button{
+    padding: 5px 0px 5px 15px;
+    text-decoration: underline;
+    color: rgb(255 255 255);
+    border: none;
+    background-color: transparent;
+    font-size: 17px;
+    cursor: pointer;
+
 }
 
 .logout-link{
@@ -325,6 +332,7 @@ h2{
     border: none;
     border-bottom: 4px solid #efe767;
     cursor: pointer;
+    text-decoration: none;
 }
 
 #reg {
@@ -334,6 +342,15 @@ h2{
 #reg:hover {
     text-decoration: none;
     color: white;
+}
+
+.user-from-err{
+    float: left;
+    margin: 2% 20%;
+    text-align: center;
+    margin-top: -15px;
+    color: #ffd670;
+    width: 300px;
 }
 
 ::-webkit-scrollbar {

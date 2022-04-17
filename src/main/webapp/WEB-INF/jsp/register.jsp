@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Web Notepad</title>
@@ -15,14 +17,35 @@
 
     <div id="right">
         <div id="auth-cover">
-            <p class="auth-header"> Create an account</p>
-            <form action="/auth/register" method="POST">
-                <input class="auth-input" type="text" name="username" value="" placeholder="Enter login"/>
-                <input class="auth-input" type="password" name="password" value="" placeholder="Enter password"/>
-                <input class="auth-input" type="password" name="confirmPassword" value="" placeholder="Confirm password"/>
+
+            <form:form method="POST" modelAttribute="userForm">
+                <p class="auth-header"> Create an account</p>
+                <spring:bind path="username">
+                    <div class="form-group ${status.error ? 'has-error' : ''}">
+                        <form:input type="text" path="username" class="auth-input" placeholder="Username"
+                                    autofocus="true"></form:input>
+                        <form:errors cssClass="user-from-err" path="username"></form:errors>
+                    </div>
+                </spring:bind>
+
+                <spring:bind path="password">
+                    <div class="form-group ${status.error ? 'has-error' : ''}">
+                        <form:input type="password" path="password" class="auth-input" placeholder="Password"></form:input>
+                        <form:errors cssClass="user-from-err" path="password"></form:errors>
+                    </div>
+                </spring:bind>
+
+                <spring:bind path="confirmPassword">
+                    <div class="form-group ${status.error ? 'has-error' : ''}">
+                        <form:input type="password" path="confirmPassword" class="auth-input"
+                                    placeholder="Confirm your password"></form:input>
+                        <form:errors cssClass="user-from-err" path="confirmPassword"></form:errors>
+                    </div>
+                </spring:bind>
+
                 <div><input class="auth-submit" type="submit" value="CREATE AN ACCOUNT"/></div>
-            </form>
-            <a id="reg" href="/auth/login">Back to Login</a>
+                <a id="reg" href="/auth/login">Back to Login</a>
+            </form:form>
         </div>
     </div>
 

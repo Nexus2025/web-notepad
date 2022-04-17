@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <title>Web Notepad</title>
@@ -19,8 +21,11 @@
 
     <div id="left">
         <h1>Web Notepad</h1>
-        <div class="user-info">User: NONE</div>
-        <div class="logout-div"><a class="logout-link" href="/logout">Logout</a></div>
+        <security:authentication var="user" property="principal" />
+        <div class="user-info">User: ${user.username}</div>
+        <form:form action="${pageContext.request.contextPath}/logout" method="POST">
+            <input class="logout-button" type="submit" value="Logout" />
+        </form:form>
         <a class="notebook-add-link" href="/?action=notebookCreate">Add new notebook +</a>
         <br>
         <br>
@@ -39,6 +44,7 @@
         <c:if test="${currentNotebook != null}">
             <h2>${currentNotebook.name}</h2>
             <form class="notebook-delete-form" method="post" action="notebook/delete">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="hidden" name="notebookId" value="${currentNotebook.id}">
                 <input class="notebook-delete-link" type="submit" value="Delete notebook">
             </form>
@@ -69,6 +75,7 @@
                 </div>
                 <div class="left-inline">
                     <form method="post" action="note/delete">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <input type="hidden" name="noteId" value="${currentNote.id}">
                         <input type="hidden" name="notebookId" value="${currentNotebook.id}">
                         <input class="note-delete-link" type="submit" value="Delete note">
@@ -80,6 +87,7 @@
             </div>
             <div class="note-content">
                 <form id="content" action="note/update" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <textarea style="width: 100%; height: 80%" name="content">${currentNote.content}</textarea>
                     <input type="hidden" name="notebookId" value="${currentNotebook.id}">
                     <input type="hidden" name="noteId" value="${currentNote.id}">
@@ -93,6 +101,7 @@
         <div class="change-cover">
             <h2 class="h2-change">CREATE NOTEBOOK</h2>
             <form method="post" action="/notebook/create">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input class="change-form-input" type="text" name="notebookName" value="">
                 <input class="change-form-submit" type="submit" value="SAVE">
                 <a class="cancel-button" href="/">Cancel</a>
@@ -104,6 +113,7 @@
         <div class="change-cover">
             <h2 class="h2-change">RENAME</h2>
             <form method="post" action="/notebook/rename">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="hidden" name="notebookId" value="${param.get("notebookId")}">
                 <input class="change-form-input" type="text" name="notebookNewName" value="${param.get("notebookName")}">
                 <input class="change-form-submit" type="submit" value="SAVE">
@@ -116,6 +126,7 @@
         <div class="change-cover">
             <h2 class="h2-change">CREATE NOTE</h2>
             <form method="post" action="/note/create">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input class="change-form-input" type="text" name="noteName" value="">
                 <input type="hidden" name="notebookId" value="${param.get("notebookId")}">
                 <input class="change-form-submit" type="submit" value="SAVE">
@@ -128,6 +139,7 @@
         <div class="change-cover">
             <h2 class="h2-change">RENAME</h2>
             <form method="post" action="/note/rename">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="hidden" name="noteId" value="${param.get("noteId")}">
                 <input type="hidden" name="notebookId" value="${currentNotebook.id}">
                 <input class="change-form-input" type="text" name="noteNewName" value="${param.get("noteName")}">
