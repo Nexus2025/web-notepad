@@ -14,37 +14,34 @@ public class NoteService {
     @Autowired
     private NoteRepository noteRepository;
 
-    public Note get(Integer id, Integer userId) {
-        return noteRepository.getOne(id);
-    }
-
-    public List<Note> getAllByNotebookId(Integer id, Integer userId) {
-        return noteRepository.findAllByNotebookId(id);
-    }
-
-    public Note create(Note note, Integer userId) {
+    public Note create(String noteName, Integer notebookId, Integer userId) {
+        Note note = new Note(notebookId, userId, noteName);
         note.setLastModified(getTime());
         note.setContent("Default content");
         return noteRepository.save(note);
     }
 
     public Note rename(Integer id, String newName, Integer userId) {
-        Note note = noteRepository.getOne(id);
-        note.setName(newName);
-        note.setLastModified(getTime());
-        return noteRepository.save(note);
+        noteRepository.rename(id, newName, userId);
+        return noteRepository.get(id, userId);
     }
 
-    public void update(Integer id, String content, Integer userId) {
-        Note note = noteRepository.getOne(id);
-        note.setContent(content);
-        note.setLastModified(getTime());
-        noteRepository.save(note);
+    public void updateContent(Integer id, String content, Integer userId) {
+        noteRepository.updateContent(id, content, userId, getTime());
     }
 
     public void delete(Integer id, Integer userId) {
-        noteRepository.deleteById(id);
+        noteRepository.delete(id, userId);
     }
+
+    public Note get(Integer id, Integer userId) {
+        return noteRepository.get(id, userId);
+    }
+
+    public List<Note> getAllByNotebookId(Integer notebookId, Integer userId) {
+        return noteRepository.getAllByNotebookId(notebookId, userId);
+    }
+
 
     private ZonedDateTime getTime() {
         return ZonedDateTime.now();

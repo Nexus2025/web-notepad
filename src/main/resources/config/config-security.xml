@@ -10,21 +10,24 @@
     http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
 
     <http auto-config="true">
+
         <intercept-url pattern="/" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/auth/login" access="isAnonymous()"/>
-        <intercept-url pattern="/auth/register" access="isAnonymous()"/>
 
-<!--        <access-denied-handler error-page="/access-denied" />-->
-<!--        https://stackoverflow.com/questions/18584558/redirect-when-intercept-url-is-not-authorized-in-spring-mvc-->
-
-        <form-login login-page="/auth/login" default-target-url="/" authentication-failure-url="/login?error"
+        <form-login login-page="/login"
+                    default-target-url="/"
+                    authentication-failure-url="/login?error"
                     username-parameter="username" password-parameter="password"/>
 
         <logout
-                logout-success-url="/auth/login"
+                logout-success-url="/login"
                 logout-url="/logout"
                 delete-cookies="JSESSIONID" />
+
+        <remember-me key="uniqueAndSecret"
+                     token-validity-seconds="86400"
+                     user-service-ref="userDetailsService"/>
+
     </http>
 
     <authentication-manager alias="authenticationManager">
@@ -40,4 +43,5 @@
                 class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
         <beans:constructor-arg name="strength" value="11"/>
     </beans:bean>
+
 </beans:beans>

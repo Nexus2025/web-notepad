@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/auth")
 public class UserController {
 
     private static Logger log = LoggerFactory.getLogger(UserController.class);
@@ -61,6 +60,7 @@ public class UserController {
 
     @PostMapping(value = "/login")
     public String login(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+
         userValidator.validateLogin(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {

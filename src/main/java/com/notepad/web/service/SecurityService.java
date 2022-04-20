@@ -22,10 +22,9 @@ public class SecurityService {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
+        authenticationToken.setDetails(userDetails);
         authenticationManager.authenticate(authenticationToken);
 
-        if (authenticationToken.isAuthenticated()) {
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        }
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }
 }

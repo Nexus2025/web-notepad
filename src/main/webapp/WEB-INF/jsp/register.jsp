@@ -2,10 +2,14 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 <html>
 <head>
     <title>Web Notepad</title>
     <link rel="stylesheet" href="/resources/css/style.css">
+    <sec:authorize access="isAuthenticated()">
+        <% response.sendRedirect("/"); %>
+    </sec:authorize>
 </head>
 <body>
 <div id="container">
@@ -44,7 +48,7 @@
                 </spring:bind>
 
                 <div><input class="auth-submit" type="submit" value="CREATE AN ACCOUNT"/></div>
-                <a id="reg" href="/auth/login">Back to Login</a>
+                <a id="reg" href="/login">Back to Login</a>
             </form:form>
         </div>
     </div>

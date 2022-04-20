@@ -27,7 +27,7 @@ public class NotebookController {
     public RedirectView create(@RequestParam String notebookName, RedirectAttributes attributes, Principal principal) {
 
         Integer userId = userService.findByUserName(principal.getName()).getId();
-        Notebook notebook = notebookService.create(new Notebook(userId, notebookName), userId);
+        Notebook notebook = notebookService.create(notebookName, userId);
         attributes.addAttribute("notebookId", notebook.getId());
 
         return new RedirectView("/");
@@ -39,7 +39,7 @@ public class NotebookController {
                                RedirectAttributes attributes, Principal principal) {
 
         Integer userId = userService.findByUserName(principal.getName()).getId();
-        Notebook notebook = notebookService.rename(new Notebook(notebookId, userId, notebookNewName), userId);
+        Notebook notebook = notebookService.rename(notebookNewName, notebookId, userId);
         attributes.addAttribute("notebookId", notebook.getId());
 
         return new RedirectView("/");

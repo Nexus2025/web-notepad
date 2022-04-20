@@ -30,7 +30,7 @@ public class NoteController {
                                RedirectAttributes attributes, Principal principal) {
 
         Integer userId = userService.findByUserName(principal.getName()).getId();
-        Note note = noteService.create(new Note(notebookId, userId, noteName), userId);
+        Note note = noteService.create(noteName, notebookId, userId);
         attributes.addAttribute("notebookId", note.getNotebookId());
 
         return new RedirectView("/");
@@ -52,11 +52,12 @@ public class NoteController {
 
     @PostMapping(value = "/update")
     @Transactional
-    public RedirectView update(@RequestParam Integer noteId, @RequestParam String content,
-                               @RequestParam Integer notebookId, RedirectAttributes attributes, Principal principal) {
+    public RedirectView updateContent(@RequestParam Integer noteId, @RequestParam String content,
+                                      @RequestParam Integer notebookId, RedirectAttributes attributes,
+                                      Principal principal) {
 
         Integer userId = userService.findByUserName(principal.getName()).getId();
-        noteService.update(noteId, content, userId);
+        noteService.updateContent(noteId, content, userId);
         attributes.addAttribute("notebookId", notebookId);
         attributes.addAttribute("noteId", noteId);
 

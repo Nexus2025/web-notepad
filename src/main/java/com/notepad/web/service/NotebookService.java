@@ -15,23 +15,24 @@ public class NotebookService {
     @Autowired
     private NotebookRepository notebookRepository;
 
-    public Notebook create(Notebook notebook, Integer userId) {
-        return notebookRepository.save(notebook);
+    public Notebook create(String name, Integer userId) {
+        return notebookRepository.save(new Notebook(userId, name));
     }
 
-    public Notebook rename(Notebook notebook, Integer userId) {
-        return notebookRepository.save(notebook);
+    public Notebook rename(String newName, Integer id, Integer userId) {
+        notebookRepository.rename(newName, id, userId);
+        return notebookRepository.get(id, userId);
+    }
+
+    public void delete(Integer id, Integer userId) {
+        notebookRepository.delete(id, userId);
+    }
+
+    public Notebook get(Integer id, Integer userId) {
+        return notebookRepository.get(id, userId);
     }
 
     public List<Notebook> getAll(Integer userId) {
         return notebookRepository.findAllByUserId(userId);
-    }
-
-    public Notebook get(Integer id, Integer userId) {
-        return notebookRepository.getOne(id);
-    }
-
-    public void delete(Integer id, Integer userId) {
-        notebookRepository.deleteById(id);
     }
 }
