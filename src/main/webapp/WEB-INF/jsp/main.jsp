@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
     <title>Web Notepad</title>
@@ -56,7 +57,8 @@
                     <div id="nt${note.id}" class="note-item">
                         <a class="note-link"
                            href="/?notebookId=${currentNotebook.id}&noteId=${note.id}">${note.name}</a>
-                        <p class="note-modified">Last modified: ${note.lastModified.toLocalDate()}</p>
+                        <fmt:parseDate value="${note.lastModified.toLocalDate()}" pattern="yyyy-MM-dd" var="parsedDateTime" />
+                        <p class="note-modified">Last modified:<br> <fmt:formatDate value="${parsedDateTime}" pattern="d MMM yyyy" /></p>
                     </div>
                 </c:forEach>
             </div>
@@ -82,7 +84,8 @@
                     </form>
                 </div>
                 <div class="left-inline">
-                    <p class="note-last-modified">Last modified: ${currentNote.lastModified.toLocalDateTime()}</p>
+                    <fmt:parseDate value="${currentNote.lastModified.toLocalDateTime()}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="parsedDateTime" />
+                    <p class="note-last-modified">Last modified: <fmt:formatDate value="${parsedDateTime}" pattern="d MMM yyyy HH:mm" /></p>
                 </div>
             </div>
             <div class="note-content">

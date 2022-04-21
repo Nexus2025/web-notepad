@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,5 +35,13 @@ public class NotebookService {
 
     public List<Notebook> getAll(Integer userId) {
         return notebookRepository.findAllByUserId(userId);
+    }
+
+    public void deleteAllNotebooksByUserId(Integer userId) {
+        notebookRepository.deleteAllByUserId(userId);
+    }
+
+    public void saveList(List<Notebook> notebooks) {
+        notebookRepository.saveAll(notebooks);
     }
 }

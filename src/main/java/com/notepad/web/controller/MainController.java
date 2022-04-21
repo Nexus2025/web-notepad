@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-public class RootController {
+public class MainController {
 
     @Autowired
     private NotebookService notebookService;

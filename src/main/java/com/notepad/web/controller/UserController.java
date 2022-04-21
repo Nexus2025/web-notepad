@@ -1,6 +1,9 @@
 package com.notepad.web.controller;
 
+import com.notepad.web.entity.Notebook;
 import com.notepad.web.entity.User;
+import com.notepad.web.service.NoteService;
+import com.notepad.web.service.NotebookService;
 import com.notepad.web.service.SecurityService;
 import com.notepad.web.service.UserService;
 import com.notepad.web.validator.UserValidator;
@@ -9,9 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -78,8 +84,11 @@ public class UserController {
     }
 
     @GetMapping(value = "/login/demo")
+    @Transactional
     public String loginDemo() {
-        //TO DO
+        securityService.autoLogin("DemoUser", "12345");
+        userService.refreshDemoUserData();
+
         return "redirect:/";
     }
 }

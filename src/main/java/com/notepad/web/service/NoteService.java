@@ -1,11 +1,11 @@
 package com.notepad.web.service;
 
 import com.notepad.web.entity.Note;
+import com.notepad.web.entity.Notebook;
 import com.notepad.web.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
@@ -14,9 +14,12 @@ public class NoteService {
     @Autowired
     private NoteRepository noteRepository;
 
+    @Autowired
+    private DateTimeService dateTimeService;
+
     public Note create(String noteName, Integer notebookId, Integer userId) {
         Note note = new Note(notebookId, userId, noteName);
-        note.setLastModified(getTime());
+        note.setLastModified(dateTimeService.getTime());
         note.setContent("Default content");
         return noteRepository.save(note);
     }
@@ -27,7 +30,7 @@ public class NoteService {
     }
 
     public void updateContent(Integer id, String content, Integer userId) {
-        noteRepository.updateContent(id, content, userId, getTime());
+        noteRepository.updateContent(id, content, userId, dateTimeService.getTime());
     }
 
     public void delete(Integer id, Integer userId) {
@@ -42,8 +45,7 @@ public class NoteService {
         return noteRepository.getAllByNotebookId(notebookId, userId);
     }
 
-
-    private ZonedDateTime getTime() {
-        return ZonedDateTime.now();
+    public void saveList(List<Note> notes) {
+        noteRepository.saveAll(notes);
     }
 }

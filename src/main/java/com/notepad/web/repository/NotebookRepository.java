@@ -22,4 +22,9 @@ public interface NotebookRepository extends JpaRepository<Notebook, Integer> {
 
     @Query("SELECT n FROM Notebook n WHERE n.id=:id AND n.userId=:userId")
     Notebook get(@Param("id") Integer id, @Param("userId") Integer userId);
+
+    @Modifying
+    @Query("DELETE FROM Notebook n WHERE n.userId=:userId")
+    void deleteAllByUserId(@Param("userId") Integer userId);
+
 }

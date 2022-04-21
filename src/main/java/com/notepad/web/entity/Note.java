@@ -35,6 +35,14 @@ public class Note {
         this.name = name;
     }
 
+    public Note(Integer notebookId, Integer userId, String name, String content, ZonedDateTime lastModified) {
+        this.notebookId = notebookId;
+        this.userId = userId;
+        this.name = name;
+        this.content = content;
+        this.lastModified = lastModified;
+    }
+
     public Note(Integer id, Integer notebookId, Integer userId, String name, String content, ZonedDateTime lastModified) {
         this.id = id;
         this.notebookId = notebookId;
