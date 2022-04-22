@@ -21,6 +21,7 @@
     </appender>
 
     <logger name="com.notepad.web" level="debug"/>
+    <logger name="org.springframework.web" level="debug"/>
 
     <root level="info">
 <!--        <appender-ref ref="file"/>-->

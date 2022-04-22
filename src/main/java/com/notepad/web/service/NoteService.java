@@ -20,7 +20,7 @@ public class NoteService {
     public Note create(String noteName, Integer notebookId, Integer userId) {
         Note note = new Note(notebookId, userId, noteName);
         note.setLastModified(dateTimeService.getTime());
-        note.setContent("Default content");
+        note.setContent("{\"ops\":[{\"insert\":\"\\n\"}]}");
         return noteRepository.save(note);
     }
 

@@ -7,6 +7,11 @@
 <head>
     <title>Web Notepad</title>
     <link rel="stylesheet" href="/resources/css/style.css">
+    <link rel="stylesheet" href="/resources/css/quill.snow.css">
+    <link rel="stylesheet" href="/resources/css/quill.core.css">
+    <script src="/resources/js/quill.js"></script>
+    <script src="/resources/js/textEditorHandler.js"></script>
+
     <style>
         #nb${currentNotebook.id}{
             background: #5c5c5c;
@@ -17,7 +22,7 @@
         }
     </style>
 </head>
-<body>
+<body onload="initTextEditor()">
 <div id="container">
 
     <div id="left">
@@ -67,34 +72,31 @@
 
     <div id="right">
         <c:if test="${currentNote != null}">
-            <div class="note-head">
-                <div class="inline"><h2 class="h2-content">${currentNote.name}</h2></div>
-                <div class="left-inline">
-                    <input class="note-save-button" type="submit" form="content" value="Save note">
+            <div id="activedContent">
+                <div class="note-head">
+                    <div class="inline"><h2 class="h2-content">${currentNote.name}</h2></div>
+                    <div class="left-inline">
+                        <input class="note-save-button" type="submit" onclick="saveContent()" value="Save note">
+                    </div>
+                    <div class="left-inline">
+                        <a class="note-rename-link" href="?action=noteRename&noteId=${currentNote.id}&noteName=${currentNote.name}&notebookId=${currentNotebook.id}">Rename note</a>
+                    </div>
+                    <div class="left-inline">
+                        <form method="post" action="note/delete">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                            <input id="noteId" type="hidden" name="noteId" value="${currentNote.id}">
+                            <input id="notebookId" type="hidden" name="notebookId" value="${currentNotebook.id}">
+                            <input class="note-delete-link" type="submit" value="Delete note">
+                        </form>
+                    </div>
+                    <div class="left-inline">
+                        <fmt:parseDate value="${currentNote.lastModified.toLocalDateTime()}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="parsedDateTime" />
+                        <p class="note-last-modified">Last modified: <fmt:formatDate value="${parsedDateTime}" pattern="d MMM yyyy HH:mm" /></p>
+                    </div>
                 </div>
-                <div class="left-inline">
-                    <a class="note-rename-link" href="?action=noteRename&noteId=${currentNote.id}&noteName=${currentNote.name}&notebookId=${currentNotebook.id}">Rename note</a>
+                <div class="note-content">
+                    <div id="editor"></div>
                 </div>
-                <div class="left-inline">
-                    <form method="post" action="note/delete">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                        <input type="hidden" name="noteId" value="${currentNote.id}">
-                        <input type="hidden" name="notebookId" value="${currentNotebook.id}">
-                        <input class="note-delete-link" type="submit" value="Delete note">
-                    </form>
-                </div>
-                <div class="left-inline">
-                    <fmt:parseDate value="${currentNote.lastModified.toLocalDateTime()}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="parsedDateTime" />
-                    <p class="note-last-modified">Last modified: <fmt:formatDate value="${parsedDateTime}" pattern="d MMM yyyy HH:mm" /></p>
-                </div>
-            </div>
-            <div class="note-content">
-                <form id="content" action="note/update" method="post">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <textarea style="width: 100%; height: 80%" name="content">${currentNote.content}</textarea>
-                    <input type="hidden" name="notebookId" value="${currentNotebook.id}">
-                    <input type="hidden" name="noteId" value="${currentNote.id}">
-                </form>
             </div>
         </c:if>
     </div>

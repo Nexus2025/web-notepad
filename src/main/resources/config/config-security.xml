@@ -11,6 +11,8 @@
 
     <http auto-config="true">
 
+        <sec:csrf disabled="true"/>
+
         <intercept-url pattern="/" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
 
