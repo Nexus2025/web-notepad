@@ -1,6 +1,7 @@
 package com.notepad.web.entity;
 
 import javax.persistence.*;
+import java.time.ZonedDateTime;
 import java.util.Set;
 
 @Entity
@@ -24,6 +25,17 @@ public class User {
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    @Column(name = "registration_date")
+    private ZonedDateTime registrationDate;
+
+    public ZonedDateTime getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(ZonedDateTime registrationDate) {
+        this.registrationDate = registrationDate;
+    }
 
     public Integer getId() {
         return id;

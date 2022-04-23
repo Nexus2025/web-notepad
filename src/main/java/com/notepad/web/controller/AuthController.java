@@ -1,9 +1,7 @@
 package com.notepad.web.controller;
 
-import com.notepad.web.entity.Notebook;
 import com.notepad.web.entity.User;
-import com.notepad.web.service.NoteService;
-import com.notepad.web.service.NotebookService;
+import com.notepad.web.service.RoleService;
 import com.notepad.web.service.SecurityService;
 import com.notepad.web.service.UserService;
 import com.notepad.web.validator.UserValidator;
@@ -17,18 +15,22 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
 
 @Controller
-public class UserController {
+public class AuthController {
 
-    private static Logger log = LoggerFactory.getLogger(UserController.class);
+    private static Logger log = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
     private UserService userService;
 
     @Autowired
     private SecurityService securityService;
+
+    @Autowired
+    private RoleService roleService;
 
     @Autowired
     private UserValidator userValidator;
@@ -50,6 +52,8 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "register";
         }
+
+        userForm.setRoles(new HashSet<>(Collections.singletonList(roleService.getByName("ROLE_USER"))));
 
         User user = userService.save(userForm);
         securityService.autoLogin(user.getUsername(), user.getConfirmPassword());

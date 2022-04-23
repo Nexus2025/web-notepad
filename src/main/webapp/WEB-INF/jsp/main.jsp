@@ -1,8 +1,8 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Web Notepad</title>
@@ -31,6 +31,9 @@
         <div class="user-info">User: ${user.username}</div>
         <form:form action="${pageContext.request.contextPath}/logout" method="POST">
             <input class="logout-button" type="submit" value="Logout" />
+            <c:if test="${isAdmin}">
+                <a class="admin-button" href="/admin">Admin Panel</a>
+            </c:if>
         </form:form>
         <a class="notebook-add-link" href="/?action=notebookCreate">Add new notebook +</a>
         <br>
@@ -54,7 +57,7 @@
                 <input type="hidden" name="notebookId" value="${currentNotebook.id}">
                 <input class="notebook-delete-link" type="submit" value="Delete notebook">
             </form>
-            <p class="rename-p"><a class="notebook-rename-link" href="?action=notebookRename&notebookId=${currentNotebook.id}&notebookName=${currentNotebook.name}">Rename notebook</a></p>
+            <p class="rename-p"><a class="notebook-rename-link" href="?action=notebookRename&notebookId=${currentNotebook.id}">Rename notebook</a></p>
             <p><a class="notebook-add-link" href="?action=noteCreate&notebookId=${currentNotebook.id}">Add new note +</a></p>
             <div class="note-size">${notes.size()} notes:</div>
             <div class="notes-scroll">
@@ -79,7 +82,7 @@
                         <input class="note-save-button" type="submit" onclick="saveContent()" value="Save note">
                     </div>
                     <div class="left-inline">
-                        <a class="note-rename-link" href="?action=noteRename&noteId=${currentNote.id}&noteName=${currentNote.name}&notebookId=${currentNotebook.id}">Rename note</a>
+                        <a class="note-rename-link" href="?action=noteRename&noteId=${currentNote.id}&notebookId=${currentNotebook.id}">Rename note</a>
                     </div>
                     <div class="left-inline">
                         <form method="post" action="note/delete">
@@ -107,7 +110,7 @@
             <h2 class="h2-change">CREATE NOTEBOOK</h2>
             <form method="post" action="/notebook/create">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <input class="change-form-input" type="text" name="notebookName" value="">
+                <input class="change-form-input" type="text" name="notebookName" value="" placeholder="Enter name">
                 <input class="change-form-submit" type="submit" value="SAVE">
                 <a class="cancel-button" href="/">Cancel</a>
             </form>
@@ -120,7 +123,7 @@
             <form method="post" action="/notebook/rename">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="hidden" name="notebookId" value="${param.get("notebookId")}">
-                <input class="change-form-input" type="text" name="notebookNewName" value="${param.get("notebookName")}">
+                <input class="change-form-input" type="text" name="notebookNewName" value="" placeholder="Enter new name">
                 <input class="change-form-submit" type="submit" value="SAVE">
                 <a class="cancel-button" href="/">Cancel</a>
             </form>
@@ -132,7 +135,7 @@
             <h2 class="h2-change">CREATE NOTE</h2>
             <form method="post" action="/note/create">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                <input class="change-form-input" type="text" name="noteName" value="">
+                <input class="change-form-input" type="text" name="noteName" value="" placeholder="Enter name">
                 <input type="hidden" name="notebookId" value="${param.get("notebookId")}">
                 <input class="change-form-submit" type="submit" value="SAVE">
                 <a class="cancel-button" href="/">Cancel</a>
@@ -147,7 +150,7 @@
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <input type="hidden" name="noteId" value="${param.get("noteId")}">
                 <input type="hidden" name="notebookId" value="${currentNotebook.id}">
-                <input class="change-form-input" type="text" name="noteNewName" value="${param.get("noteName")}">
+                <input class="change-form-input" type="text" name="noteNewName" value="" placeholder="Enter new name">
                 <input class="change-form-submit" type="submit" value="SAVE">
                 <a class="cancel-button" href="/">Cancel</a>
             </form>

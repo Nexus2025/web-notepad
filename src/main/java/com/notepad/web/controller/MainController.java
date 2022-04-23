@@ -1,6 +1,7 @@
 package com.notepad.web.controller;
 
 import com.notepad.web.entity.Notebook;
+import com.notepad.web.entity.User;
 import com.notepad.web.service.NoteService;
 import com.notepad.web.service.NotebookService;
 import com.notepad.web.service.UserService;
@@ -34,10 +35,12 @@ public class MainController {
                          @RequestParam(required = false)Integer notebookId,
                          @RequestParam(required = false)Integer noteId) {
 
-        Integer userId = userService.findByUserName(principal.getName()).getId();
+        User user = userService.findByUserName(principal.getName());
+        Integer userId = user.getId();
 
         List<Notebook> notebooks = notebookService.getAll(userId);
         model.addAttribute("notebooks", notebooks);
+        model.addAttribute("isAdmin", user.getRoles().stream().anyMatch(r -> r.getName().equals("ROLE_ADMIN")));
 
         if (notebookId != null) {
             model.addAttribute("currentNotebook", notebookService.get(notebookId, userId));

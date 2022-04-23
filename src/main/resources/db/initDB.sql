@@ -5,9 +5,10 @@ DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
-    id          SERIAL PRIMARY KEY,
-    username    VARCHAR NOT NULL,
-    password    VARCHAR NOT NULL
+    id                  SERIAL PRIMARY KEY,
+    username            VARCHAR NOT NULL,
+    password            VARCHAR NOT NULL,
+    registration_date   TIMESTAMP NOT NULL
 );
 
 CREATE TABLE roles (
@@ -47,10 +48,10 @@ CREATE TABLE notes(
 
 )
 
-INSERT INTO users (username, password)
+INSERT INTO users (username, password, registration_date)
     VALUES
-    ('Admin', '$2a$11$nB7Qkyl33Klskeyx8o2tquHuQDT9nJVcynW50XYb66kEhmAAyUcGG'),
-    ('DemoUser', '$2a$11$nB7Qkyl33Klskeyx8o2tquHuQDT9nJVcynW50XYb66kEhmAAyUcGG');
+    ('Admin', '$2a$11$nB7Qkyl33Klskeyx8o2tquHuQDT9nJVcynW50XYb66kEhmAAyUcGG', '2022-04-23 21:35:37.585000'),
+    ('DemoUser', '$2a$11$nB7Qkyl33Klskeyx8o2tquHuQDT9nJVcynW50XYb66kEhmAAyUcGG', '2022-04-23 21:35:37.585000');
 
 INSERT INTO roles (name)
     VALUES
