@@ -2,19 +2,27 @@ package com.notepad.web.service;
 
 import com.notepad.web.entity.Note;
 import com.notepad.web.entity.Notebook;
+import com.notepad.web.entity.Role;
 import com.notepad.web.entity.User;
 import com.notepad.web.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -38,6 +46,11 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+
+    public User get(Integer id) {
+        return userRepository.findById(id).get();
+    }
+
     public List<User> getAll() {
         return userRepository.findAll();
     }
@@ -47,6 +60,14 @@ public class UserService {
         user.setRegistrationDate(dateTimeService.getTime());
 
         return userRepository.save(user);
+    }
+
+    public void update(User user) {
+        userRepository.save(user);
+    }
+
+    public void delete(Integer id) {
+        userRepository.deleteById(id);
     }
 
     public void refreshDemoUserData() {
@@ -73,7 +94,19 @@ public class UserService {
         noteService.saveList(notes);
     }
 
-    public void delete(Integer id) {
-        userRepository.deleteById(id);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
+
+        if (user == null) {
+            throw new UsernameNotFoundException("Bad credentials");
+        }
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+    }
+
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.toString())).collect(Collectors.toList());
     }
 }

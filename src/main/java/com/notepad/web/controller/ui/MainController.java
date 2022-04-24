@@ -1,6 +1,7 @@
-package com.notepad.web.controller;
+package com.notepad.web.controller.ui;
 
 import com.notepad.web.entity.Notebook;
+import com.notepad.web.entity.Role;
 import com.notepad.web.entity.User;
 import com.notepad.web.service.NoteService;
 import com.notepad.web.service.NotebookService;
@@ -40,7 +41,7 @@ public class MainController {
 
         List<Notebook> notebooks = notebookService.getAll(userId);
         model.addAttribute("notebooks", notebooks);
-        model.addAttribute("isAdmin", user.getRoles().stream().anyMatch(r -> r.getName().equals("ROLE_ADMIN")));
+        model.addAttribute("isAdmin", user.getRoles().stream().anyMatch(r -> r.equals(Role.ROLE_ADMIN)));
 
         if (notebookId != null) {
             model.addAttribute("currentNotebook", notebookService.get(notebookId, userId));

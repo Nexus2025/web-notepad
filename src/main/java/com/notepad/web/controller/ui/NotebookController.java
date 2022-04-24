@@ -1,4 +1,4 @@
-package com.notepad.web.controller;
+package com.notepad.web.controller.ui;
 
 import com.notepad.web.entity.Notebook;
 import com.notepad.web.service.NotebookService;

@@ -39,13 +39,10 @@
                     </div>
                 </spring:bind>
 
-                <spring:bind path="confirmPassword">
                     <div class="form-group ${status.error ? 'has-error' : ''}">
-                        <form:input type="password" path="confirmPassword" class="auth-input"
-                                    placeholder="Confirm your password"></form:input>
-                        <form:errors cssClass="user-from-err" path="confirmPassword"></form:errors>
+                        <input class="auth-input" type="password" name="confirmPassword" value="" placeholder="Confirm your password">
+                        <form:errors cssClass="user-from-err" path="password"></form:errors>
                     </div>
-                </spring:bind>
 
                 <div><input class="auth-submit" type="submit" value="CREATE AN ACCOUNT"/></div>
                 <a id="reg" href="/login">Back to Login</a>

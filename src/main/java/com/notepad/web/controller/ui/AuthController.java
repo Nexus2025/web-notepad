@@ -1,7 +1,7 @@
-package com.notepad.web.controller;
+package com.notepad.web.controller.ui;
 
+import com.notepad.web.entity.Role;
 import com.notepad.web.entity.User;
-import com.notepad.web.service.RoleService;
 import com.notepad.web.service.SecurityService;
 import com.notepad.web.service.UserService;
 import com.notepad.web.validator.UserValidator;
@@ -30,9 +30,6 @@ public class AuthController {
     private SecurityService securityService;
 
     @Autowired
-    private RoleService roleService;
-
-    @Autowired
     private UserValidator userValidator;
 
     @Autowired
@@ -46,17 +43,19 @@ public class AuthController {
     }
 
     @PostMapping(value = "/register")
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
-        userValidator.validateRegistration(userForm, bindingResult);
+    public String registration(@ModelAttribute("userForm") User userForm,
+                               @RequestParam String confirmPassword,
+                               BindingResult bindingResult) {
+        userValidator.validateRegistration(userForm, bindingResult, confirmPassword);
 
         if (bindingResult.hasErrors()) {
             return "register";
         }
 
-        userForm.setRoles(new HashSet<>(Collections.singletonList(roleService.getByName("ROLE_USER"))));
+        userForm.setRoles(new HashSet<>(Collections.singletonList(Role.ROLE_USER)));
 
         User user = userService.save(userForm);
-        securityService.autoLogin(user.getUsername(), user.getConfirmPassword());
+        securityService.autoLogin(user.getUsername(), confirmPassword);
 
         return "redirect:/";
     }

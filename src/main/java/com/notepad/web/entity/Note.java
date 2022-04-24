@@ -1,5 +1,7 @@
 package com.notepad.web.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 
@@ -23,6 +25,7 @@ public class Note {
     @Column(name = "content")
     private String content;
 
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     @Column(name = "last_modified")
     private ZonedDateTime lastModified;
 

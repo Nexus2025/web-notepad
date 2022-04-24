@@ -1,7 +1,6 @@
 package com.notepad.web.service;
 
 import com.notepad.web.entity.Note;
-import com.notepad.web.entity.Notebook;
 import com.notepad.web.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

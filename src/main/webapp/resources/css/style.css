@@ -182,6 +182,10 @@ h2{
     width: 11vh;
 }
 
+.remember-checkbox{
+    color: white;
+}
+
 .user-table-scroll{
     overflow: auto;
     height: 60vh;

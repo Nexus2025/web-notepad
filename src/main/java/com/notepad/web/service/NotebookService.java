@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +22,12 @@ public class NotebookService {
     public Notebook rename(String newName, Integer id, Integer userId) {
         notebookRepository.rename(newName, id, userId);
         return notebookRepository.get(id, userId);
+    }
+
+    public void update(Notebook notebook, Integer userId) {
+        if (notebook.getUserId().equals(userId)) {
+            notebookRepository.save(notebook);
+        }
     }
 
     public void delete(Integer id, Integer userId) {

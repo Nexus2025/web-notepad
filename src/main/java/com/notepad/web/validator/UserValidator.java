@@ -13,7 +13,7 @@ public class UserValidator {
     @Autowired
     private UserService userService;
 
-    public void validateRegistration(User user, Errors errors) {
+    public void validateRegistration(User user, Errors errors, String confirmPassword) {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "Required");
         if (user.getUsername().length() < 5) {
@@ -29,8 +29,8 @@ public class UserValidator {
             errors.rejectValue("password", "Size.userForm.password");
         }
 
-        if (!user.getConfirmPassword().equals(user.getPassword())) {
-            errors.rejectValue("confirmPassword", "Different.userForm.password");
+        if (!confirmPassword.equals(user.getPassword())) {
+            errors.rejectValue("password", "Different.userForm.password");
         }
     }
 

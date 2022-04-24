@@ -1,7 +1,7 @@
-package com.notepad.web.controller;
+package com.notepad.web.controller.ui;
 
+import com.notepad.web.entity.Role;
 import com.notepad.web.entity.User;
-import com.notepad.web.service.RoleService;
 import com.notepad.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,9 +22,6 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RoleService roleService;
-
     @GetMapping
     public String getAll(Model model) {
         model.addAttribute("users", userService.getAll());
@@ -39,7 +36,7 @@ public class AdminController {
             User user = new User();
             user.setUsername(username);
             user.setPassword(password);
-            user.setRoles(new HashSet<>(Collections.singletonList(roleService.getByName(role))));
+            user.setRoles(new HashSet<>(Collections.singletonList(Role.valueOf(role))));
             userService.save(user);
         }
 

@@ -37,7 +37,7 @@
                         <form:errors cssClass="user-from-err" path="password"></form:errors>
                     </div>
                 </spring:bind>
-                <div><input type="checkbox" name="remember-me">Remember me</div>
+                <div><input type="checkbox" name="remember-me"><a class="remember-checkbox" >Remember me</a></div>
                 <div><input class="auth-submit" type="submit" value="LOG IN"/></div>
             </form:form>
 

@@ -53,7 +53,7 @@
                         <td>${user.username}</td>
                         <td>
                             <c:forEach items="${user.roles}" var="role">
-                                ${role.name}
+                                ${role}
                             </c:forEach>
                         </td>
                         <fmt:parseDate value="${user.registrationDate.toLocalDateTime()}" pattern="yyyy-MM-dd'T'HH:mm:ss" var="parsedDateTime" />
