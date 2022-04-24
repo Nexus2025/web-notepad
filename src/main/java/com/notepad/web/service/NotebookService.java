@@ -30,6 +30,10 @@ public class NotebookService {
         }
     }
 
+    public Notebook save (Notebook notebook) {
+        return notebookRepository.save(notebook);
+    }
+
     public void delete(Integer id, Integer userId) {
         notebookRepository.delete(id, userId);
     }

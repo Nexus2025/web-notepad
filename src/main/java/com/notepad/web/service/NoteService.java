@@ -4,6 +4,7 @@ import com.notepad.web.entity.Note;
 import com.notepad.web.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,6 +33,12 @@ public class NoteService {
         noteRepository.updateContent(id, content, userId, dateTimeService.getTime());
     }
 
+    public Note save (Note note) {
+        note.setLastModified(dateTimeService.getTime());
+        return noteRepository.save(note);
+    }
+
+    @Transactional
     public void delete(Integer id, Integer userId) {
         noteRepository.delete(id, userId);
     }
@@ -46,5 +53,11 @@ public class NoteService {
 
     public void saveList(List<Note> notes) {
         noteRepository.saveAll(notes);
+    }
+
+    public void update(Note note, Integer userId) {
+        if (note.getUserId().equals(userId)) {
+            noteRepository.save(note);
+        }
     }
 }
