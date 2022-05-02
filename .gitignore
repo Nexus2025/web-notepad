@@ -6,3 +6,4 @@
 git
 *.txt
 database.properties
+Dockerfile

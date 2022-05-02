@@ -4,7 +4,7 @@ import com.notepad.web.entity.Role;
 import com.notepad.web.entity.User;
 import com.notepad.web.service.SecurityService;
 import com.notepad.web.service.UserService;
-import com.notepad.web.validator.UserValidator;
+import com.notepad.web.validation.UserValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

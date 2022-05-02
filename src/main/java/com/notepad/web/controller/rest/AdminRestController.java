@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/rest/admin/users", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -21,12 +22,17 @@ public class AdminRestController {
 
     @GetMapping
     public List<User> getAll() {
-        return userService.getAll();
+        return userService.getAll()
+                .stream()
+                .peek(u -> u.setPassword("confidential data"))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
     public User get(@PathVariable Integer id) {
-        return userService.get(id);
+        User user = userService.get(id);
+        user.setPassword("confidential data");
+        return user;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

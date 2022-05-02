@@ -1,4 +1,4 @@
-package com.notepad.web.validator;
+package com.notepad.web.validation;
 
 import com.notepad.web.entity.User;
 import com.notepad.web.service.UserService;
