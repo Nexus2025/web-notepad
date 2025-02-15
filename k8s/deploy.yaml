@@ -19,7 +19,6 @@ spec:
           image: IMAGE_PLACEHOLDER  # Замените на ваш образ
           ports:
             - containerPort: 80
-          imagePullPolicy: Never
 
 ---
 
