@@ -16,12 +16,11 @@ spec:
     spec:
       containers:
         - name: webnotepad-app
-          image: IMAGE_PLACEHOLDER
+          image: IMAGE_PLACEHOLDER  # Замените на ваш образ
           ports:
             - containerPort: 80
 
-
-  ---
+---
 
 apiVersion: v1
 kind: Service
