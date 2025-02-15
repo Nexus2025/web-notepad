@@ -25,7 +25,7 @@ CREATE TABLE notebooks (
 
                            FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 
-)
+);
 
 CREATE TABLE notes(
                       id              SERIAL PRIMARY KEY,
@@ -38,7 +38,7 @@ CREATE TABLE notes(
                       FOREIGN KEY (notebook_id) REFERENCES notebooks (id) ON DELETE CASCADE,
                       FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 
-)
+);
 
 INSERT INTO users (username, password, registration_date)
 VALUES
