@@ -21,7 +21,7 @@ spec:
             - containerPort: 8080
           envFrom:
             - configMapRef:
-                name: webnotepad-app-svc  # Имя твоего ConfigMap
+                name: webnotepad-app-config  # Имя твоего ConfigMap
 
 ---
 
