@@ -19,6 +19,9 @@ spec:
           image: IMAGE_PLACEHOLDER  # Замените на ваш образ
           ports:
             - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: webnotepad-app-svc  # Имя твоего ConfigMap
 
 ---
 
@@ -35,3 +38,15 @@ spec:
       port: 8080
       targetPort: 8080
       nodePort: 30007
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webnotepad-app-config
+data:
+  DB_URL: "DB_URL_PLACEHOLDER"
+  DB_USERNAME: "DB_USERNAME_PLACEHOLDER"
+  DB_PASSWORD: "DB_PASSWORD_PLACEHOLDER"
+  JDBC_DRIVER: "JDBC_DRIVER_PLACEHOLDER"
